@@ -424,6 +424,7 @@
   <ItemGroup />
   <ItemGroup>
     <ClCompile Include="BananasEngine.cpp" />
+    <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="BananasEngine.fx">
@@ -442,7 +443,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <CLInclude Include="resource.h" />
+    <ClInclude Include="include\Prerequisites.h" />
+    <ClInclude Include="include\Resource.h" />
+    <ClInclude Include="include\Window.h" />
     <ResourceCompile Include="BananasEngine.rc" />
   </ItemGroup>
   <ItemGroup>
