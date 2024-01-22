@@ -43,8 +43,7 @@ struct CBChangesEveryFrame
 // Global Variables
 //--------------------------------------------------------------------------------------
 Window                              g_window;
-//HINSTANCE                           g_hInst = nullptr;
-//HWND                                g_hWnd = nullptr;
+
 D3D_DRIVER_TYPE                     g_driverType = D3D_DRIVER_TYPE_NULL;
 D3D_FEATURE_LEVEL                   g_featureLevel = D3D_FEATURE_LEVEL_11_0;
 ID3D11Device*                       g_pd3dDevice = nullptr;
@@ -72,7 +71,6 @@ XMFLOAT4                            g_vMeshColor( 0.7f, 0.7f, 0.7f, 1.0f );
 //--------------------------------------------------------------------------------------
 // Forward declarations
 //--------------------------------------------------------------------------------------
-//HRESULT InitWindow( HINSTANCE hInstance, int nCmdShow );
 HRESULT InitDevice();
 void CleanupDevice();
 LRESULT CALLBACK    WndProc( HWND, UINT, WPARAM, LPARAM );
@@ -116,45 +114,6 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
 
     return ( int )msg.wParam;
 }
-
-
-//--------------------------------------------------------------------------------------
-// Register class and create window
-//--------------------------------------------------------------------------------------
-//HRESULT InitWindow( HINSTANCE hInstance, int nCmdShow )
-//{
-//    // Register class
-//    WNDCLASSEX wcex;
-//    wcex.cbSize = sizeof( WNDCLASSEX );
-//    wcex.style = CS_HREDRAW | CS_VREDRAW;
-//    wcex.lpfnWndProc = WndProc;
-//    wcex.cbClsExtra = 0;
-//    wcex.cbWndExtra = 0;
-//    wcex.hInstance = hInstance;
-//    wcex.hIcon = LoadIcon( hInstance, ( LPCTSTR )IDI_TUTORIAL1 );
-//    wcex.hCursor = LoadCursor( nullptr, IDC_ARROW );
-//    wcex.hbrBackground = ( HBRUSH )( COLOR_WINDOW + 1 );
-//    wcex.lpszMenuName = nullptr;
-//    wcex.lpszClassName = "TutorialWindowClass";
-//    wcex.hIconSm = LoadIcon( wcex.hInstance, ( LPCTSTR )IDI_TUTORIAL1 );
-//    if( !RegisterClassEx( &wcex ) )
-//        return E_FAIL;
-//
-//    // Create window
-//    g_hInst = hInstance;
-//    RECT rc = { 0, 0, 640, 480 };
-//    AdjustWindowRect( &rc, WS_OVERLAPPEDWINDOW, FALSE );
-//    g_hWnd = CreateWindow( "TutorialWindowClass", "Direct3D 11 Tutorial 7", WS_OVERLAPPEDWINDOW,
-//                           CW_USEDEFAULT, CW_USEDEFAULT, rc.right - rc.left, rc.bottom - rc.top, nullptr, nullptr, hInstance,
-//                           nullptr );
-//    if( !g_hWnd )
-//        return E_FAIL;
-//
-//    ShowWindow( g_hWnd, nCmdShow );
-//
-//    return S_OK;
-//}
-
 
 //--------------------------------------------------------------------------------------
 // Helper for compiling shaders with D3DX11
