@@ -39,7 +39,7 @@ public:
 	unsigned int m_height;
 private:
 	HINSTANCE m_hInst = nullptr;
-	// 
+	// IDK
 	RECT m_rect;
 	// Declare the window name 
 	std::string m_WindowName = "Direct3D 11 Tutorial 7";
