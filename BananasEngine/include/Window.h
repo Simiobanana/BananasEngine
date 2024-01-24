@@ -31,12 +31,17 @@ public:
 	destroy();
 
 public: 
+	// This is in charge to close the window
 	HWND m_hWnd = nullptr;
+	// m_width is a parameter to control the width of the screen
 	unsigned int m_width;
+	// m_height is a parameter to control the height of the screen
 	unsigned int m_height;
 private:
 	HINSTANCE m_hInst = nullptr;
+	// 
 	RECT m_rect;
+	// Declare the window name 
 	std::string m_WindowName = "Direct3D 11 Tutorial 7";
 };
 
