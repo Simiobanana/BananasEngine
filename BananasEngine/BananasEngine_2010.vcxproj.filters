@@ -24,6 +24,9 @@
     <ClCompile Include="src\Window.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Device.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="BananasEngine.fx">
@@ -45,5 +48,8 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\Device.h">
+      <Filter>Include</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
