@@ -5,32 +5,51 @@ class DeviceContext;
 class Window;
 class Texture;
 
-class 
-	SwapChain{
+/// <summary>
+/// This class responsible to presents rendered images to the screen
+/// </summary>
+class SwapChain {
 public:
-	SwapChain() = default;
-	~SwapChain() { SAFE_RELEASE(m_swapChain); };
+    SwapChain() = default;
+    ~SwapChain() { SAFE_RELEASE(m_swapChain); };
 
-	void
-	init(Device & device,
-		 DeviceContext & deviceContext,
-		 Texture & backBuffer,
-		 Window window);
+    /// <summary>
+    /// The metod is in charge to initializes the swap chain.
+    /// </summary>
+    /// <param name="device"> Get device used for rendering </param>
+    /// <param name="deviceContext"> Get device context used for rendering </param>
+    /// <param name="backBuffer"> Get back texture to use </param>
+    /// <param name="window"> Get window associated with the swap chain </param>
+    void
+        init(Device& device,
+            DeviceContext& deviceContext,
+            Texture& backBuffer,
+            Window window);
 
-	void
-	update();
+    void
+        update();
 
-	void
-	render();
+    void
+        render();
 
-	void
-	destroy();
+    void
+        destroy();
 
 public:
-	IDXGISwapChain* m_swapChain = nullptr;
+    /// <summary>
+    /// Pointer to the DXGI swap chain interface
+    /// </summary>
+    IDXGISwapChain* m_swapChain = nullptr;
+
 private:
-	D3D_DRIVER_TYPE m_driverType = D3D_DRIVER_TYPE_NULL;
-	D3D_FEATURE_LEVEL m_feature_level = D3D_FEATURE_LEVEL_11_0;
+    /// <summary>
+    /// The type of driver used for rendering
+    /// </summary>
+    D3D_DRIVER_TYPE m_driverType = D3D_DRIVER_TYPE_NULL;
+
+    /// <summary>
+    /// Feature level of the hardware device
+    /// </summary>
+    D3D_FEATURE_LEVEL m_feature_level = D3D_FEATURE_LEVEL_11_0;
 
 };
-
