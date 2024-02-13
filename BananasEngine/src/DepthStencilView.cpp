@@ -8,7 +8,9 @@
 /// <param name="device"> The device associated with the depth stencil view </param>
 /// <param name="depthStencil"> A pointer to the depth stencil resource </param>
 /// <param name="format"> The DXGI_FORMAT of the depth stencil view </param>
-void DepthStencilView::init(Device device, ID3D11Resource* depthStencil, DXGI_FORMAT format) {
+void DepthStencilView::init(Device device, 
+                            ID3D11Resource* depthStencil, 
+                            DXGI_FORMAT format) {
     if (device.m_device == nullptr) {
         WARNING("ERROR: Device::DepthStencilView::init : Error in data from params [CHECK FOR Device device]\n");
         exit(1);

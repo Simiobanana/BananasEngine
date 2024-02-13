@@ -30,9 +30,9 @@ public:
     /// <param name="Depth"> Clear Depth? </param>
     /// <param name="Stencil"> Clear Stencil? </param>
     void ClearDepthStencilView(ID3D11DepthStencilView* pDepthStencilView,
-        unsigned int ClearFlags,
-        float Depth,
-        unsigned int Stencil);
+                               unsigned int ClearFlags,
+                               float Depth,
+                               unsigned int Stencil);
 
     /// <summary>
     /// Shader resources for textures 
@@ -41,8 +41,8 @@ public:
     /// <param name="NumViews"> ??? </param>
     /// <param name="ppShaderResourceViews"> Array of shader resource views </param>
     void PSSetShaderResources(unsigned int StartSlot,
-        unsigned int NumViews,
-        ID3D11ShaderResourceView* const* ppShaderResourceViews);
+                              unsigned int NumViews,
+                              ID3D11ShaderResourceView* const* ppShaderResourceViews);
 
 public:
     /// <summary>
