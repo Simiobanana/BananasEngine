@@ -11,6 +11,7 @@
 #include "DeviceContext.h"
 #include "DepthStencilView.h"
 #include "Texture.h"
+#include "ShaderProgram.h"
 
 //--------------------------------------------------------------------------------------
 // Structures
@@ -46,6 +47,7 @@ Device                              g_device;
 DeviceContext                       g_deviceContext;
 Texture                             g_depthStencil;
 DepthStencilView                    g_depthStencilView;
+ShaderProgram                       g_shaderProgram;
 
 D3D_DRIVER_TYPE                     g_driverType = D3D_DRIVER_TYPE_NULL;
 D3D_FEATURE_LEVEL                   g_featureLevel = D3D_FEATURE_LEVEL_11_0;
@@ -57,7 +59,7 @@ ID3D11RenderTargetView*             g_pRenderTargetView = nullptr;
 //ID3D11DepthStencilView*             g_pDepthStencilView = nullptr;
 ID3D11VertexShader*                 g_pVertexShader = nullptr;
 ID3D11PixelShader*                  g_pPixelShader = nullptr;
-ID3D11InputLayout*                  g_pVertexLayout = nullptr;
+//ID3D11InputLayout*                  g_pVertexLayout = nullptr;
 ID3D11Buffer*                       g_pVertexBuffer = nullptr;
 ID3D11Buffer*                       g_pIndexBuffer = nullptr;
 ID3D11Buffer*                       g_pCBNeverChanges = nullptr;
@@ -267,7 +269,7 @@ HRESULT InitDevice()
     g_deviceContext.m_deviceContext->RSSetViewports( 1, &vp );
 
     // Compile the vertex shader
-    ID3DBlob* pVSBlob = nullptr;
+    /*ID3DBlob* pVSBlob = nullptr;
     hr = CompileShaderFromFile( "BananasEngine.fx", "VS", "vs_4_0", &pVSBlob );
     if( FAILED( hr ) )
     {
@@ -282,7 +284,7 @@ HRESULT InitDevice()
     {    
         pVSBlob->Release();
         return hr;
-    }
+    }*/
 
     // Define the input layout
     D3D11_INPUT_ELEMENT_DESC layout[] =
@@ -290,20 +292,44 @@ HRESULT InitDevice()
         { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
         { "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
     };
-    UINT numElements = ARRAYSIZE( layout );
+    //UINT numElements = ARRAYSIZE( layout );
+
+    std::vector<D3D11_INPUT_ELEMENT_DESC> Layout;
+    D3D11_INPUT_ELEMENT_DESC position;
+    position.SemanticName = "POSITION";
+    position.SemanticIndex = 0;
+    position.Format = DXGI_FORMAT_R32G32B32_FLOAT;
+    position.InputSlot = 0;
+    position.AlignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT /*12*/;
+    position.InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+    position.InstanceDataStepRate = 0;
+    Layout.push_back(position);
+
+    D3D11_INPUT_ELEMENT_DESC texcoord;
+    texcoord.SemanticName = "TEXCOORD";
+    texcoord.SemanticIndex = 0;
+    texcoord.Format = DXGI_FORMAT_R32G32_FLOAT;
+    texcoord.InputSlot = 0;
+    texcoord.AlignedByteOffset = D3D11_APPEND_ALIGNED_ELEMENT /*12*/;
+    texcoord.InputSlotClass = D3D11_INPUT_PER_VERTEX_DATA;
+    texcoord.InstanceDataStepRate = 0;
+    Layout.push_back(texcoord);
+
+    //init Shader
+    g_shaderProgram.init(g_device, "BananasEngine.fx", Layout);
 
     // Create the input layout
-    hr = g_device.CreateInputLayout( layout, numElements, pVSBlob->GetBufferPointer(),
-                                          pVSBlob->GetBufferSize(), &g_pVertexLayout );
-    pVSBlob->Release();
-    if( FAILED( hr ) )
-        return hr;
+    //hr = g_device.CreateInputLayout( layout, numElements, pVSBlob->GetBufferPointer(),
+    //                                      pVSBlob->GetBufferSize(), &g_pVertexLayout );
+    //pVSBlob->Release();
+    //if( FAILED( hr ) )
+    //    return hr;
 
     // Set the input layout
-    g_deviceContext.m_deviceContext->IASetInputLayout( g_pVertexLayout );
+    //g_deviceContext.m_deviceContext->IASetInputLayout( g_pVertexLayout );
 
     // Compile the pixel shader
-    ID3DBlob* pPSBlob = nullptr;
+    /*ID3DBlob* pPSBlob = nullptr;
     hr = CompileShaderFromFile( "BananasEngine.fx", "PS", "ps_4_0", &pPSBlob );
     if( FAILED( hr ) )
     {
@@ -316,7 +342,7 @@ HRESULT InitDevice()
     hr = g_device.CreatePixelShader( pPSBlob->GetBufferPointer(), pPSBlob->GetBufferSize(), nullptr, &g_pPixelShader );
     pPSBlob->Release();
     if( FAILED( hr ) )
-        return hr;
+        return hr;*/
 
     // Create vertex buffer
     SimpleVertex vertices[] =
@@ -484,9 +510,10 @@ void CleanupDevice()
     if( g_pCBChangesEveryFrame ) g_pCBChangesEveryFrame->Release();
     if( g_pVertexBuffer ) g_pVertexBuffer->Release();
     if( g_pIndexBuffer ) g_pIndexBuffer->Release();
-    if( g_pVertexLayout ) g_pVertexLayout->Release();
+    //if( g_pVertexLayout ) g_pVertexLayout->Release();
     if( g_pVertexShader ) g_pVertexShader->Release();
     if( g_pPixelShader ) g_pPixelShader->Release();
+    //AKI VA OTRA MADRE QUE NO ALCANCE A VER
     //if( g_pDepthStencil ) g_pDepthStencil->Release();
     //if( g_pDepthStencilView ) g_pDepthStencilView->Release();
     if( g_pRenderTargetView ) g_pRenderTargetView->Release();
@@ -576,6 +603,7 @@ void Render()
     //
     // Render the cube
     //
+    g_shaderProgram.render(g_deviceContext);
     g_deviceContext.m_deviceContext->VSSetShader( g_pVertexShader, nullptr, 0 );
     g_deviceContext.m_deviceContext->VSSetConstantBuffers( 0, 1, &g_pCBNeverChanges );
     g_deviceContext.m_deviceContext->VSSetConstantBuffers( 1, 1, &g_pCBChangeOnResize );

@@ -36,6 +36,12 @@
     <ClCompile Include="src\Texture.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\InputLayout.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ShaderProgram.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="BananasEngine.fx">
@@ -70,6 +76,12 @@
       <Filter>Include</Filter>
     </ClInclude>
     <ClInclude Include="include\Texture.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ShaderProgram.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\InputLayout.h">
       <Filter>Include</Filter>
     </ClInclude>
   </ItemGroup>
