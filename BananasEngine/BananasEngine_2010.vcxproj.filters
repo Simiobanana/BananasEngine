@@ -111,5 +111,8 @@
     <ClInclude Include="include\SamplerState.h">
       <Filter>Include</Filter>
     </ClInclude>
+    <ClInclude Include="include\Model.h">
+      <Filter>Include</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

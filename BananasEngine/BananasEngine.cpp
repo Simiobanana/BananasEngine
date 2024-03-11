@@ -21,11 +21,6 @@
 //--------------------------------------------------------------------------------------
 // Structures
 //--------------------------------------------------------------------------------------
-/*struct SimpleVertex
-{
-    XMFLOAT3 Pos;
-    XMFLOAT2 Tex;
-};*/
 
 struct CBNeverChanges
 {
@@ -78,6 +73,7 @@ Mesh                                g_mesh;
 HRESULT InitDevice();
 void CleanupDevice();
 LRESULT CALLBACK    WndProc( HWND, UINT, WPARAM, LPARAM );
+void Update();
 void Render();
 
 
@@ -110,6 +106,7 @@ int WINAPI wWinMain( HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdL
         }
         else
         {
+            Update();
             Render();
         }
     }
@@ -181,22 +178,13 @@ HRESULT InitDevice()
         g_depthStencil.m_texture,
         DXGI_FORMAT_D24_UNORM_S8_UINT);
 
-
-    //g_deviceContext.m_deviceContext->OMSetRenderTargets( 1, &g_pRenderTargetView, g_depthStencilView.m_depthStencilView );
-
     g_viewport.init(g_window);
 
     // Setup the viewport
 
-
     // Compile the vertex shader
 
-
-
     // Define the input layout
-
-
-    //UINT numElements = ARRAYSIZE( layout );
 
     std::vector<D3D11_INPUT_ELEMENT_DESC> Layout;
     D3D11_INPUT_ELEMENT_DESC position;
@@ -372,21 +360,14 @@ void CleanupDevice()
     //Release Model resources
     if (g_pCBChangesEveryFrame) g_pCBChangesEveryFrame->Release();
     // Release Shader Resources
-    //if( g_pVertexBuffer ) g_pVertexBuffer->Release();
-    //if( g_pIndexBuffer ) g_pIndexBuffer->Release();
     g_vertexBuffer.destroy();
     g_vertexBuffer.destroy();
-    //if( g_pVertexLayout ) g_pVertexLayout->Release();
-    //if( g_pVertexShader ) g_pVertexShader->Release();
-    //if( g_pPixelShader ) g_pPixelShader->Release();
-    //Release depth stencil
     g_shaderProgram.destroy();
     g_depthStencil.destroy();
 
     //Release depth stencil view
     g_depthStencilView.destroy();
     //Release render target view
-    //if( g_pRenderTargetView ) g_pRenderTargetView->Release();
     g_renderTargetView.destroy();
     //Release swapchain
     g_swapchain.destroy();
@@ -422,12 +403,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     return 0;
 }
 
-
-//--------------------------------------------------------------------------------------
-// Render a frame
-//--------------------------------------------------------------------------------------
-void Render()
-{
+void Update() {
     // Update our time
     static float t = 0.0f;
     if (g_swapchain.m_driverType == D3D_DRIVER_TYPE_REFERENCE)
@@ -450,15 +426,19 @@ void Render()
     g_vMeshColor.x = 1.0f;//( sinf( t * 1.0f ) + 1.0f ) * 0.5f;
     g_vMeshColor.y = 1.0f;//( cosf( t * 3.0f ) + 1.0f ) * 0.5f;
     g_vMeshColor.z = 1.0f;//( sinf( t * 5.0f ) + 1.0f ) * 0.5f;
+}
+
+
+//--------------------------------------------------------------------------------------
+// Render a frame
+//--------------------------------------------------------------------------------------
+void Render()
+{
 
     //
     // Clear the back buffer
     //
     float ClearColor[4] = { 0.0f, 0.125f, 0.3f, 1.0f }; // red, green, blue, alpha
-
-
-
-
 
     g_depthStencilView.render(g_deviceContext);
     g_renderTargetView.render(g_deviceContext, g_depthStencilView, 1, ClearColor);
@@ -478,11 +458,9 @@ void Render()
     // Render the cube
     //
     g_shaderProgram.render(g_deviceContext);
-    //g_deviceContext.m_deviceContext->VSSetShader( g_pVertexShader, nullptr, 0 );
     g_deviceContext.m_deviceContext->VSSetConstantBuffers(0, 1, &g_pCBNeverChanges);
     g_deviceContext.m_deviceContext->VSSetConstantBuffers(1, 1, &g_pCBChangeOnResize);
     g_deviceContext.m_deviceContext->VSSetConstantBuffers(2, 1, &g_pCBChangesEveryFrame);
-    //g_deviceContext.m_deviceContext->PSSetShader( g_pPixelShader, nullptr, 0 );
     g_deviceContext.m_deviceContext->PSSetConstantBuffers(2, 1, &g_pCBChangesEveryFrame);
 
 
