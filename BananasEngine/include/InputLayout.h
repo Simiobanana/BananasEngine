@@ -1,6 +1,7 @@
 #pragma once
 #include "Prerequisites.h";
 class Device;
+class DeviceContext;
 
 class InputLayout
 {

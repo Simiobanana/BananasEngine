@@ -35,6 +35,12 @@ public:
                                float Depth,
                                unsigned int Stencil);
 
+    void ClearRenderTargetView(ID3D11RenderTargetView* pRenderTargetView,
+        const float ColorRGBA[4]);
+
+    void  RSSetViewports(unsigned int NumViewports,
+        const D3D11_VIEWPORT* pViewports);
+
     /// <summary>
     /// Shader resources for textures 
     /// </summary>
@@ -64,6 +70,28 @@ public:
                 ID3D11ClassInstance* const* ppClassInstances,
                 unsigned int NumClassInstances);
 
+    void DeviceContext::UpdateSubresource(ID3D11Resource* pDstResource,
+        unsigned int DstSubresource,
+        const D3D11_BOX* pDstBox,
+        const void* pSrcData,
+        unsigned int SrcRowPitch,
+        unsigned int SrcDepthPitch);
+
+    void
+        IASetVertexBuffer(unsigned int Starlot,
+            unsigned int NumBuffers,
+            ID3D11Buffer* const* ppVertexBuffers,
+            const unsigned int* pStrides,
+            const unsigned int* pOffsets);
+    void
+        IASetIndexBuffer(ID3D11Buffer* pIndexBuffer,
+            DXGI_FORMAT format,
+            unsigned int Offset);
+
+    void
+        PSSetSamplers(unsigned int StartSlot,
+            unsigned int NumSamplers,
+            ID3D11SamplerState* const* ppSamplers);
 public:
     /// <summary>
     /// This a pointer to the device context 

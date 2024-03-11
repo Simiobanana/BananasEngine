@@ -36,7 +36,7 @@ void ShaderProgram::update(){
 
 void ShaderProgram::render(DeviceContext& deviceContext)
 {
-	m_InputLayout.render(deviceContext & deviceContext);
+	m_InputLayout.render(deviceContext);
 	deviceContext.VSSetShader(m_VertexShader, nullptr, 0);
 	deviceContext.PSSetShader(m_PixelShader, nullptr, 0);
 }

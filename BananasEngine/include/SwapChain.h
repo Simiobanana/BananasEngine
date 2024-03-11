@@ -35,21 +35,23 @@ public:
     void
         destroy();
 
+    void
+        present();
+
 public:
     /// <summary>
     /// Pointer to the DXGI swap chain interface
     /// </summary>
     IDXGISwapChain* m_swapChain = nullptr;
-
-private:
     /// <summary>
     /// The type of driver used for rendering
     /// </summary>
     D3D_DRIVER_TYPE m_driverType = D3D_DRIVER_TYPE_NULL;
 
+private:
     /// <summary>
     /// Feature level of the hardware device
     /// </summary>
-    D3D_FEATURE_LEVEL m_feature_level = D3D_FEATURE_LEVEL_11_0;
+    D3D_FEATURE_LEVEL m_featureLevel = D3D_FEATURE_LEVEL_11_0;
 
 };

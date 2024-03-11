@@ -5,6 +5,7 @@
 class Device;
 class DeviceContext;
 
+
 class ShaderProgram
 {
 public:
