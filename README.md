@@ -1,10 +1,10 @@
 
-#Motor Gráfico DirectX
+# Motor Gráfico DirectX
 ¡Bienvenido al repositorio del Motor Gráfico DirectX!
 
 Este motor gráfico ha sido creado como parte de un proyecto en clase, con el objetivo de proporcionar una plataforma sólida para el desarrollo de aplicaciones y juegos en entornos DirectX. Aquí encontrarás información sobre las diversas clases y componentes que conforman este motor.
 
-##Componentes Principales
+## Componentes Principales
 Buffer
 La clase Buffer proporciona funcionalidades para la gestión de búferes de datos en la GPU.
 
@@ -47,10 +47,10 @@ Viewport define la región en la que se realiza el renderizado en el destino de 
 Window
 Window gestiona la ventana de la aplicación y proporciona una interfaz para interactuar con ella.
 
-##Entorno de Desarrollo
+## Entorno de Desarrollo
 Este motor gráfico se ha desarrollado utilizando la librería DirectX con la ayuda del entorno de desarrollo integrado Visual Studio 2019. DirectX proporciona un conjunto de herramientas poderosas para el desarrollo de gráficos en tiempo real en plataformas Windows.
 
-##Funcionalidades Actuales
+## Funcionalidades Actuales
 Hasta el momento, el motor gráfico es capaz de cargar modelos en el entorno y renderizarlos en la pantalla. Se continúa trabajando en la implementación de nuevas características y mejoras.
 
 ¡Gracias por visitar nuestro repositorio! Esperamos que encuentres útil este motor gráfico en tus proyectos de desarrollo de juegos y aplicaciones. Si tienes alguna pregunta o sugerencia, no dudes en abrir un issue o ponerte en contacto con nosotros.
