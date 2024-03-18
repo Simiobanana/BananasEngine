@@ -17,6 +17,7 @@
 #include "Viewport.h"
 #include "Buffer.h"
 #include "SamplerState.h"
+#include "ModelLoader.h"
 
 //--------------------------------------------------------------------------------------
 // Structures
@@ -64,6 +65,8 @@ ID3D11Buffer*                       g_pCBChangeOnResize = nullptr;
 ID3D11Buffer*                       g_pCBChangesEveryFrame = nullptr;
 ID3D11ShaderResourceView*           g_pTextureRV = nullptr;
 SamplerState                        g_sampler;
+ModelLoader                         g_modelLoader;
+LoadData                            LD;
 
 XMMATRIX                            g_World;
 XMMATRIX                            g_View;
@@ -226,6 +229,8 @@ HRESULT InitDevice()
     //->Carga de modelo 3D
     //Create Vertex buffer
 
+    
+
     SimpleVertex vertices[] =
     {
          { XMFLOAT3(-1.0f, 1.0f, -1.0f), XMFLOAT2(0.0f, 0.0f) },
@@ -259,15 +264,19 @@ HRESULT InitDevice()
         { XMFLOAT3(-1.0f, 1.0f, 1.0f), XMFLOAT2(0.0f, 1.0f) },
     };
 
-
-    for (SimpleVertex vertex : vertices)
+    g_mesh = g_modelLoader.Load("simio.obj");
+    g_vertexBuffer.init(g_device, g_mesh, D3D11_BIND_VERTEX_BUFFER);
+    /*for (SimpleVertex vertex : vertices)
     {
         g_mesh.vertex.push_back(vertex);
     }
-    g_mesh.numVertex = g_mesh.vertex.size();
-
+    g_mesh.numVertex = g_mesh.vertex.size();*/
+    //LoadModel
+    //Le paso a LoadModel el tamanio de vertices que tenemos en g_mesh para que cargue el objeto
+    //g_mesh.numVertex = LD.vertex.size();
+    //g_mesh.numVertex = LD.numVertex;
+    //Aqui va el modelo
     // Create vertex buffer
-    g_vertexBuffer.init(g_device, g_mesh, D3D11_BIND_VERTEX_BUFFER);
 
     unsigned int indices[] =
     {
@@ -290,17 +299,16 @@ HRESULT InitDevice()
         23,20,22
     };
 
-    for (unsigned int index : indices)
-    {
-        g_mesh.index.push_back(index);
-    }
-    g_mesh.numIndex = g_mesh.index.size();
-
+    //for (unsigned int index : indices)
+    //{
+    //    g_mesh.index.push_back(index);
+    //}
+    //g_mesh.numIndex = g_mesh.index.size();
     // Create index buffer
-
+    //g_mesh.numIndex = LD.numIndex;
     g_indexBuffer.init(g_device, g_mesh, D3D11_BIND_INDEX_BUFFER);
 
-
+    
 
     // Create the constant buffers
     D3D11_BUFFER_DESC bd;
@@ -495,6 +503,7 @@ void Render()
     g_deviceContext.m_deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
     g_deviceContext.m_deviceContext->DrawIndexed(g_mesh.numIndex, 0, 0);
+    //Cambiar a LD?
 
     //
     // Present our back buffer to our front buffer
