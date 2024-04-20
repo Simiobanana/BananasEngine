@@ -17,6 +17,41 @@ void ModelLoader::destroy()
 {
 }
 
+/*Mesh
+ModelLoader::Load(std::string objFileName)
+{
+	Mesh mesh;
+	objl::Loader Loader;
+	if (Loader.LoadFile(objFileName)) {
+		mesh.name = objFileName;
+
+		mesh.vertex.reserve(Loader.LoadedVertices.size());
+		mesh.index.reserve(Loader.LoadedIndices.size());
+
+		for (auto& vertex : Loader.LoadedVertices) {
+			mesh.vertex.emplace_back(SimpleVertex{
+				{vertex.Position.X, vertex.Position.Y,vertex.Position.Z},
+				{vertex.TextureCoordinate.X, 1.0f - vertex.TextureCoordinate.Y},
+				{vertex.Normal.X, vertex.Normal.Y, vertex.Normal.Z}
+				});
+		}
+
+		for (auto index : Loader.LoadedIndices) {
+			mesh.index.push_back(index);
+		}
+
+		mesh.numVertex = mesh.vertex.size();
+		mesh.numIndex = mesh.index.size();
+	}
+	else {
+		WARNING("ERROR: ModelLoader::LoadV2 : [CREATION OF RESOURCE : FALSE] [CHECK FOR ModelLoader LoadV2] \n");
+		exit(1);
+	}
+
+	//WARNING("ModelLoader::Load() [Load of file: " << objFileName.c_str() << "] \n");
+
+	return mesh;
+}*/
 Mesh
 ModelLoader::Load(std::string objFileName)
 {
@@ -41,7 +76,12 @@ ModelLoader::Load(std::string objFileName)
 
 		// Load Textures
 		mesh.vertex[i].Tex.x = Loader.LoadedVertices[i].TextureCoordinate.X;
-		mesh.vertex[i].Tex.y = Loader.LoadedVertices[i].TextureCoordinate.Y;
+		mesh.vertex[i].Tex.y = 1.0f - Loader.LoadedVertices[i].TextureCoordinate.Y;
+
+		//normal
+		mesh.vertex[i].Nor.x = Loader.LoadedVertices[i].Normal.X;
+		mesh.vertex[i].Nor.y = Loader.LoadedVertices[i].Normal.Y;
+		mesh.vertex[i].Nor.z = Loader.LoadedVertices[i].Normal.Z;
 	}
 
 	// Load and set data to custom structure
