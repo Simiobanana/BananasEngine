@@ -44,7 +44,7 @@ public:
 	/// <param name="deviceContext"> The device context to be used for rendering </param>
 	/// <param name="StarSlot"> The starting slot for rendering </param>
 	void
-	render(DeviceContext& deviceContext, unsigned int StarSlot);
+	render(DeviceContext& deviceContext, unsigned int StarSlot, unsigned int NumViews);
 
 	void
 	destroy();

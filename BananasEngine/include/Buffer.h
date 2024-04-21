@@ -37,6 +37,10 @@ public:
 	void
 		render(DeviceContext& deviceContext, DXGI_FORMAT format);
 
+	// Actualiza en render el constant Buffer
+	void
+		renderModel(DeviceContext& deviceContext, unsigned int StartSlot, unsigned int NumBuffers);
+
 
 	void
 		destroy();
