@@ -305,11 +305,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 //--------------------------------------------------------------------------------------
 void update()
 {
-    // UI Update
+    //Ui update
+
     UI.update();
     bool showDemoWindow = true;
     ImGui::ShowDemoWindow(&showDemoWindow);
-    
+
     // Update our time
     static float t = 0.0f;
     if (g_swapchain.m_driverType == D3D_DRIVER_TYPE_REFERENCE)
@@ -334,41 +335,28 @@ void update()
     g_vMeshColor.x = 1.0f;//( sinf( t * 1.0f ) + 1.0f ) * 0.5f;
     g_vMeshColor.y = 1.0f;//( cosf( t * 3.0f ) + 1.0f ) * 0.5f;
     g_vMeshColor.z = 1.0f;//( sinf( t * 5.0f ) + 1.0f ) * 0.5f;
+
+    // Update variables that change once per frame
+    CBChangesEveryFrame cb;
+    cb.mWorld = g_World;
+    cb.vMeshColor = g_vMeshColor;
+    g_modelBuffer.update(g_deviceContext, 0, nullptr, &cb, 0, 0);
+
+    // Update light
+    //g_lightConfig.LightPos = XMFLOAT4(5.0f, 6.0f, -5.0f, 0); // Posición de la luz en el espacio 3D
+    g_lightConfig.LightColor = XMFLOAT3(1.0f, 1.0f, 1.0f); // Color de la luz en RGB
+    g_lightConfig.AmbientIntensity = 0.05f; // Intensidad ambiental de la luz+
+    g_lightConfig.padding = 0.0f; // Padding to align to 16 bytes
+    g_lightBuffer.update(g_deviceContext, 0, nullptr, &g_lightConfig, 0, 0);
+
+    // Update Camera Buffers
+    g_camera.update(g_deviceContext, 0, nullptr, &g_cameraData, 0, 0);
 }
 
 
 //--------------------------------------------------------------------------------------
 // Render a frame
 //--------------------------------------------------------------------------------------
-void Render()
-{
-
-    //
-    // Clear the back buffer
-    //
-    //float ClearColor[4] = { 0.0f, 0.125f, 0.3f, 1.0f }; // red, green, blue, alpha
-    //g_depthStencilView.render(g_deviceContext);
-    //g_renderTargetView.render(g_deviceContext, g_depthStencilView, 1, ClearColor);
-
-    //set Viewport
-    //g_viewport.render(g_deviceContext);
-
-    //
-    // Update variables that change once per frame
-    //
-    CBChangesEveryFrame cb;
-    cb.mWorld = g_World;
-    cb.vMeshColor = g_vMeshColor;
-    g_modelBuffer.update(g_deviceContext,0, nullptr, &cb,0,0);
-
-    //UpdateLight
-    g_lightConfig.LightColor = XMFLOAT3(1.0f, 1.0f, 1.0f); //Color de la luz en espacio 3D
-    g_lightConfig.AmbientIntensity = 0.05f; //Intensidad ambiental de la luz
-    g_lightConfig.padding = 0.0f; //Padding to allign 16 bytes
-    g_lightBuffer.update(g_deviceContext, 0, nullptr, &g_lightConfig, 0, 0);
-    //Update Camera Buffers
-    g_camera.update(g_deviceContext, 0, nullptr, &g_cameraData, 0, 0);
-}
 
 void Render()
 {
