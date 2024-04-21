@@ -20,6 +20,7 @@
 #include "ModelLoader.h"
 #include "UserInterface.h"
 
+
 //--------------------------------------------------------------------------------------
 // Global Variables
 //--------------------------------------------------------------------------------------
@@ -149,7 +150,6 @@ HRESULT InitDevice()
     g_viewport.init(g_window);
 
     // Compile the vertex shader
-
     std::vector<D3D11_INPUT_ELEMENT_DESC> Layout;
     D3D11_INPUT_ELEMENT_DESC position;
     position.SemanticName = "POSITION";
@@ -249,7 +249,9 @@ void CleanupDevice()
     // Release Shader Resources
     g_vertexBuffer.destroy();
     g_vertexBuffer.destroy();
+
     //Release depth stencil
+
     g_shaderProgram.destroy();
     g_depthStencil.destroy();
     //Release depth stencil view
@@ -297,6 +299,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 }
 
 
+
 //--------------------------------------------------------------------------------------
 // Render a frame
 //--------------------------------------------------------------------------------------
@@ -331,6 +334,14 @@ void update()
     g_vMeshColor.x = 1.0f;//( sinf( t * 1.0f ) + 1.0f ) * 0.5f;
     g_vMeshColor.y = 1.0f;//( cosf( t * 3.0f ) + 1.0f ) * 0.5f;
     g_vMeshColor.z = 1.0f;//( sinf( t * 5.0f ) + 1.0f ) * 0.5f;
+}
+
+
+//--------------------------------------------------------------------------------------
+// Render a frame
+//--------------------------------------------------------------------------------------
+void Render()
+{
 
     //
     // Clear the back buffer
@@ -370,6 +381,7 @@ void Render()
 
     // Set camera buffers
     g_shaderProgram.render(g_deviceContext);
+
 
     // Set constant buffer for changes every frame
     g_camera.renderModel(g_deviceContext, 0, 1);
