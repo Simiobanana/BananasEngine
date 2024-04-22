@@ -23,6 +23,9 @@ public:
 		destroy();
 
 	void
+		OtherStyle();
+
+	void
 		vec3Control(std::string label,
 			float values,
 			float resetValues = 0.0f,
