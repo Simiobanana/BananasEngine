@@ -53,7 +53,7 @@ Este motor gráfico se ha desarrollado utilizando la librería DirectX con la ay
 ## Funcionalidades Actuales
 El motor gráfico es capaz de cargar modelos en el entorno, renderizarlos en la pantalla ademas de poder añadirle sus respectivas texturas albedo junto con las normales.
 
-## Aqui uunas imagenes de un par de modelos texturas y la UI
+## Aqui unas imagenes de un par de modelos texturas y la UI
 ![image](https://github.com/Simiobanana/BananasEngine/assets/114266340/f664c659-8ae3-4a96-b62c-57f8f39c37ab)
 
 
