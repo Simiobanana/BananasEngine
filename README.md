@@ -51,7 +51,11 @@ Window gestiona la ventana de la aplicación y proporciona una interfaz para int
 Este motor gráfico se ha desarrollado utilizando la librería DirectX con la ayuda del entorno de desarrollo integrado Visual Studio 2019. DirectX proporciona un conjunto de herramientas poderosas para el desarrollo de gráficos en tiempo real en plataformas Windows.
 
 ## Funcionalidades Actuales
-Hasta el momento, el motor gráfico es capaz de cargar modelos en el entorno y renderizarlos en la pantalla. Se continúa trabajando en la implementación de nuevas características y mejoras.
+El motor gráfico es capaz de cargar modelos en el entorno, renderizarlos en la pantalla ademas de poder añadirle sus respectivas texturas albedo junto con las normales.
+
+## Aqui uunas imagenes de un par de modelos texturas y la UI
+![image](https://github.com/Simiobanana/BananasEngine/assets/114266340/f664c659-8ae3-4a96-b62c-57f8f39c37ab)
+
 
 ¡Gracias por visitar nuestro repositorio! Esperamos que encuentres útil este motor gráfico en tus proyectos de desarrollo de juegos y aplicaciones. Si tienes alguna pregunta o sugerencia, no dudes en abrir un issue o ponerte en contacto con nosotros.
 
