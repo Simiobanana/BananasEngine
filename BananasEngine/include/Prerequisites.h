@@ -50,6 +50,7 @@ __declspec(align(16)) struct LightConfig
 {
 	XMFLOAT4 LightPos;
 	XMFLOAT3 LightColor;
+	float LightIntensity;
 	float AmbientIntensity;
 	float padding;
 };

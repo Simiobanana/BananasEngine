@@ -311,6 +311,32 @@ void update()
     bool showDemoWindow = true;
     ImGui::ShowDemoWindow(&showDemoWindow);
 
+    //Light Settings
+    ImGui::Begin("Light Settings");
+
+    ImGui::SliderFloat("Light X", &g_lightConfig.LightPos.x, -100.0f, 100.0f);
+    ImGui::SliderFloat("Light Y", &g_lightConfig.LightPos.y, -100.0f, 100.0f);
+    ImGui::SliderFloat("Light Z", &g_lightConfig.LightPos.z, -100.0f, 100.0f);
+    ImGui::SliderFloat("Light Intensity", &g_lightConfig.LightIntensity, 0.0f, 1.0f);
+    ImGui::ColorEdit3("Light Color", (float*)&g_lightConfig.LightColor);
+    ImGui::SliderFloat("Ambient Intensity", &g_lightConfig.AmbientIntensity, 0.0f, 1.0f);
+
+    ImGui::End();
+
+    //Color Model Texture
+    ImGui::Begin("COLOR MODEL TEXTURE");
+
+    ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 255, 0, 255));
+    ImGui::Text("White is better:");
+    ImGui::PopStyleColor();
+    ImGui::ColorEdit4("MyColor##2f", (float*)&g_vMeshColor, ImGuiColorEditFlags_Float);
+
+    ImGui::End();
+
+    ImGui::Render();
+    ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+
+
     // Update our time
     static float t = 0.0f;
     if (g_swapchain.m_driverType == D3D_DRIVER_TYPE_REFERENCE)
@@ -344,9 +370,9 @@ void update()
 
     // Update light
     //g_lightConfig.LightPos = XMFLOAT4(5.0f, 6.0f, -5.0f, 0); // Posición de la luz en el espacio 3D
-    g_lightConfig.LightColor = XMFLOAT3(1.0f, 1.0f, 1.0f); // Color de la luz en RGB
-    g_lightConfig.AmbientIntensity = 0.05f; // Intensidad ambiental de la luz+
-    g_lightConfig.padding = 0.0f; // Padding to align to 16 bytes
+    //g_lightConfig.LightColor = XMFLOAT3(1.0f, 1.0f, 1.0f); // Color de la luz en RGB
+    //g_lightConfig.AmbientIntensity = 0.05f; // Intensidad ambiental de la luz+
+    //g_lightConfig.padding = 0.0f; // Padding to align to 16 bytes
     g_lightBuffer.update(g_deviceContext, 0, nullptr, &g_lightConfig, 0, 0);
 
     // Update Camera Buffers

@@ -8,62 +8,92 @@ UserInterface::~UserInterface()
 {
 }
 
+/**
+ * @brief Inicializa la interfaz de usuario utilizando Dear ImGui en un contexto de gráficos DirectX 11.
+ *
+ * @param window Puntero a la ventana de la aplicación.
+ * @param device Puntero al dispositivo DirectX 11.
+ * @param deviceContext Puntero al contexto de dispositivo DirectX 11.
+ */
 void UserInterface::init(void* window, ID3D11Device* device, ID3D11DeviceContext* deviceContext)
 {
-	//Setup Dear ImGui context
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO();
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+    // Configuración del contexto de Dear ImGui
+    IMGUI_CHECKVERSION(); // Asegura que la versión de Dear ImGui sea compatible
+    ImGui::CreateContext(); // Crea un contexto de Dear ImGui
+    ImGuiIO& io = ImGui::GetIO(); // Obtiene la estructura de configuración de Dear ImGui
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Habilita la navegación con el teclado
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable; // Habilita el docking de ventanas
 
-	//Setiup Dear ImGui style
-	ImGui::StyleColorsDark();
+    // Configuración de estilo de Dear ImGui
+    //ImGui::StyleColorsDark(); // Establece un esquema de colores oscuro para la interfaz
 
-	ImGuiStyle& style = ImGui::GetStyle();
-	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-	{
-		style.WindowRounding = 0.0f;
-		style.Colors[ImGuiCol_WindowBg].w = 1.0f;
-	}
+    // Personalización adicional del estilo
+    /*ImGuiStyle& style = ImGui::GetStyle();
+    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+    {
+        style.WindowRounding = 0.0f; // Desactiva el redondeo de las ventanas
+        style.Colors[ImGuiCol_WindowBg].w = 1.0f; // Establece el canal alfa de fondo de ventana a 1.0 (completamente opaco)
+    }*/
 
-    OtherStyle();
+    OtherStyle(); // Llama a una función que realiza otras personalizaciones de estilo
 
-	//Setup Platform/ Renderer backends
-	ImGui_ImplWin32_Init(window);
-	ImGui_ImplDX11_Init(device, deviceContext);
+    // Configuración de los backends de plataforma/renderizador
+    ImGui_ImplWin32_Init(window); // Inicializa el backend de plataforma para Windows
+    ImGui_ImplDX11_Init(device, deviceContext); // Inicializa el backend de renderizado DirectX 11
 }
 
+/**
+ * @brief Actualiza el estado de la interfaz de usuario en cada fotograma.
+ *
+ * Esta función llama a las funciones de inicio de fotograma de ImGui para los backends de DirectX 11 y Windows,
+ * y comienza un nuevo fotograma de ImGui.
+ */
 void UserInterface::update()
 {
-	ImGui_ImplDX11_NewFrame();
-	ImGui_ImplWin32_NewFrame();
-	ImGui::NewFrame();
+    ImGui_ImplDX11_NewFrame(); // Inicia un nuevo fotograma de ImGui para el backend de DirectX 11
+    ImGui_ImplWin32_NewFrame(); // Inicia un nuevo fotograma de ImGui para el backend de Windows
+    ImGui::NewFrame(); // Comienza un nuevo fotograma de ImGui
 }
 
+/**
+ * @brief Renderiza la interfaz de usuario en cada fotograma.
+ *
+ * Esta función renderiza la interfaz de usuario utilizando ImGui, y luego renderiza los datos de dibujo
+ * con el backend de DirectX 11. Si los viewports están habilitados en ImGui, también se actualizan y
+ * renderizan las ventanas de la plataforma.
+ */
 void UserInterface::render()
 {
-	ImGui::Render();
-	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-	ImGuiIO& io = ImGui::GetIO();
+    ImGui::Render(); // Renderiza la interfaz de usuario de ImGui
+    ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData()); // Renderiza los datos de dibujo con el backend de DirectX 11
+    ImGuiIO& io = ImGui::GetIO(); // Obtiene la estructura de configuración de ImGui
 
-	if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-	{
-		ImGui::UpdatePlatformWindows();
-		ImGui::RenderPlatformWindowsDefault();
-	}
+    // Si los viewports están habilitados en ImGui, actualiza y renderiza las ventanas de la plataforma
+    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+    {
+        ImGui::UpdatePlatformWindows();
+        ImGui::RenderPlatformWindowsDefault();
+    }
 }
 
+/**
+ * @brief Destruye la interfaz de usuario y libera los recursos asociados.
+ *
+ * Esta función libera los recursos utilizados por los backends de DirectX 11 y Windows, y destruye el contexto de ImGui.
+ */
 void UserInterface::destroy()
 {
-	ImGui_ImplDX11_Shutdown();
-	ImGui_ImplWin32_Shutdown();
-	ImGui::DestroyContext();
+    ImGui_ImplDX11_Shutdown(); // Libera los recursos del backend de DirectX 11
+    ImGui_ImplWin32_Shutdown(); // Libera los recursos del backend de Windows
+    ImGui::DestroyContext(); // Destruye el contexto de ImGui
 }
+
 
 void UserInterface::OtherStyle()
 {
-    ImGuiStyle& style = ImGui::GetStyle();
+    ImGuiStyle& style = ImGui::GetStyle(); // Obtiene el estilo actual de ImGui
+
+    // Aplica diferentes ajustes de estilo
     style.Alpha = 1.0f;
     style.DisabledAlpha = 0.6000000238418579f;
     style.WindowPadding = ImVec2(6.0f, 3.0f);
