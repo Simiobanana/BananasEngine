@@ -55,6 +55,17 @@ Camera                              g_cameraData;
 LightConfig                         g_lightConfig;
 float                               g_LightMovementSpeed = 1.0;
 XMFLOAT4                            g_LightPosition = XMFLOAT4(0.0f, 0.0f, 0.0f, 0.0f);
+float                               scaleX = 1.0f;
+float                               scaleY = 1.0f;
+float                               scaleZ = 1.0f;
+float                               rotationAngleX = 0.0f;
+float                               rotationAngleY = 0.0f;
+float                               rotationAngleZ = 0.0f;
+float                               translationX = 0.0f;
+float                               translationY = 0.0f;
+float                               translationZ = 0.0f;
+
+
 
 
 //--------------------------------------------------------------------------------------
@@ -208,7 +219,7 @@ HRESULT InitDevice()
     // Initialize the world matrices
     g_World = XMMatrixIdentity();
 
-    XMVECTOR Eye = XMVectorSet(0.0f, 3.0f, 6.0f, -30.0f);
+    XMVECTOR Eye = XMVectorSet(0.0f, 3.0f, 6.0f, 0.0f);
     XMVECTOR At = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
     XMVECTOR Up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
     g_View = XMMatrixLookAtLH(Eye, At, Up);
@@ -323,15 +334,42 @@ void update()
 
     ImGui::End();
 
-    //Color Model Texture
-    ImGui::Begin("COLOR MODEL TEXTURE");
+    //MeshColor Settings
+    ImGui::Begin("vMeshColor");
 
-    ImGui::PushStyleColor(ImGuiCol_Text, IM_COL32(0, 255, 0, 255));
-    ImGui::Text("White is better:");
-    ImGui::PopStyleColor();
-    ImGui::ColorEdit4("MyColor##2f", (float*)&g_vMeshColor, ImGuiColorEditFlags_Float);
+    ImGui::SliderFloat("vMeshColorX", &g_vMeshColor.x, -100.0f, 100.0f);
+    ImGui::SliderFloat("vMeshColorY", &g_vMeshColor.y, -100.0f, 100.0f);
+    ImGui::SliderFloat("vMeshColorZ", &g_vMeshColor.z, -100.0f, 100.0f);
+    ImGui::SliderFloat("vMeshColorW", &g_vMeshColor.w, -100.0f, 100.0f);
 
     ImGui::End();
+
+    //Transform model settings
+    ImGui::Begin("Transformaciones de Objeto");
+
+    // Scale
+    ImGui::Text("Scale:");
+    ImGui::SliderFloat("Scale X", &scaleX, 0.1f, 10.0f);
+    ImGui::SliderFloat("Scale Y", &scaleY, 0.1f, 10.0f);
+    ImGui::SliderFloat("Scale Z", &scaleZ, 0.1f, 10.0f);
+
+    // Rotación
+    ImGui::Text("Rotate:");
+    ImGui::SliderFloat("Ángle X", &rotationAngleX, 0.0f, 90.0f);
+    ImGui::SliderFloat("Ángle Y", &rotationAngleY, 0.0f, 90.0f);
+    ImGui::SliderFloat("Ángle Z", &rotationAngleZ, 0.0f, 90.0f);
+
+    // Translación
+    ImGui::Text("Translate:");
+    ImGui::SliderFloat("Translate X", &translationX, -10.0f, 10.0f);
+    ImGui::SliderFloat("Translate Y", &translationY, -10.0f, 10.0f);
+    ImGui::SliderFloat("Translate Z", &translationZ, -10.0f, 10.0f);
+
+    ImGui::End();
+
+    //Camera Settings
+    
+
 
     ImGui::Render();
     ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
@@ -353,14 +391,15 @@ void update()
     }
 
     // Rotate cube around the origin
-    g_World = XMMatrixScaling(1, 1, 1) *
-        XMMatrixRotationRollPitchYaw(0, t, 0) *
-        XMMatrixTranslation(0, 0, 0);
+    // Aplicar las transformaciones
+    g_World = XMMatrixScaling(scaleX, scaleY, scaleZ) *
+        XMMatrixRotationRollPitchYaw(rotationAngleX, rotationAngleY, rotationAngleZ) *
+        XMMatrixTranslation(translationX, translationY, translationZ);
 
     // Modify the color
-    g_vMeshColor.x = 1.0f;//( sinf( t * 1.0f ) + 1.0f ) * 0.5f;
-    g_vMeshColor.y = 1.0f;//( cosf( t * 3.0f ) + 1.0f ) * 0.5f;
-    g_vMeshColor.z = 1.0f;//( sinf( t * 5.0f ) + 1.0f ) * 0.5f;
+    //g_vMeshColor.x = 1.0f;//( sinf( t * 1.0f ) + 1.0f ) * 0.5f;
+    //g_vMeshColor.y = 1.0f;//( cosf( t * 3.0f ) + 1.0f ) * 0.5f;
+    //g_vMeshColor.z = 1.0f;//( sinf( t * 5.0f ) + 1.0f ) * 0.5f;
 
     // Update variables that change once per frame
     CBChangesEveryFrame cb;

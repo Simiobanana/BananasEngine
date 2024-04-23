@@ -55,6 +55,7 @@ __declspec(align(16)) struct LightConfig
 	float padding;
 };
 
+
 __declspec(align(16)) struct CBChangesEveryFrame
 {
 	XMMATRIX mWorld;
@@ -72,6 +73,7 @@ struct Mesh {
 	std::string name;
 	std::vector <SimpleVertex> vertex;
 	std::vector <unsigned int> index;
+	XMFLOAT4 Color;
 	int numVertex;
 	int numIndex;
 
