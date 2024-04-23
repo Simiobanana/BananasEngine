@@ -48,7 +48,7 @@ UserInterface                       UI;
 XMMATRIX                            g_World;
 XMMATRIX                            g_View;
 XMMATRIX                            g_Projection;
-XMFLOAT4                            g_vMeshColor(0.7f, 0.7f, 0.7f, 1.0f);
+XMFLOAT4                            g_vMeshColor(1.0f, 1.0f, 1.0f, 1.0f);
 Mesh                                g_mesh;
 ModelLoader                         g_modelLoader;
 Camera                              g_cameraData;
@@ -64,6 +64,7 @@ float                               rotationAngleZ = 0.0f;
 float                               translationX = 0.0f;
 float                               translationY = 0.0f;
 float                               translationZ = 0.0f;
+float                               ClearColor[4] = { 0.0f, 0.125f, 0.3f, 1.0f }; // red, green, blue, alpha
 
 
 
@@ -197,7 +198,7 @@ HRESULT InitDevice()
     //g_shaderProgram.init(g_device, "BananasEngine.fx", Layout);
 
     //Generar Mesh
-    g_mesh = g_modelLoader.Load("Pistol.obj");
+    g_mesh = g_modelLoader.Load("Mono.obj");
     //->Carga de modelo 3D
     //Create vertex buffer
     g_vertexBuffer.init(g_device, g_mesh, D3D11_BIND_VERTEX_BUFFER);
@@ -210,8 +211,8 @@ HRESULT InitDevice()
     g_lightBuffer.init(g_device, sizeof(LightConfig));
 
     //Load the texture 
-    g_albedo.init(g_device, "GunAlbedo.dds");
-    g_normal.init(g_device, "normal.dds");
+    g_albedo.init(g_device, "Mono_Texture.dds");
+    g_normal.init(g_device, "Mono_Normal.dds");
 
     //Create the sampler state
     g_sampler.init(g_device);
@@ -232,7 +233,7 @@ HRESULT InitDevice()
 
     g_lightConfig.LightPos = XMFLOAT4(0.0f, 0.0f, 70.0f, 0); //Posicion de la luz en el espacio 3D
     g_lightConfig.LightColor = XMFLOAT3(1.0f, 1.0f, 1.0f); //Color de luz RGB
-    g_lightConfig.AmbientIntensity = 0.2f; //Intensidad Ambiental de la luz
+    g_lightConfig.AmbientIntensity = 1.0f; //Intensidad Ambiental de la luz
 
     UI.init(g_window.m_hWnd, g_device.m_device, g_deviceContext.m_deviceContext);
 
@@ -349,9 +350,9 @@ void update()
 
     // Scale
     ImGui::Text("Scale:");
-    ImGui::SliderFloat("Scale X", &scaleX, 0.1f, 10.0f);
-    ImGui::SliderFloat("Scale Y", &scaleY, 0.1f, 10.0f);
-    ImGui::SliderFloat("Scale Z", &scaleZ, 0.1f, 10.0f);
+    ImGui::SliderFloat("Scale X", &scaleX, 0.01f, 10.0f);
+    ImGui::SliderFloat("Scale Y", &scaleY, 0.01f, 10.0f);
+    ImGui::SliderFloat("Scale Z", &scaleZ, 0.01f, 10.0f);
 
     // Rotación
     ImGui::Text("Rotate:");
@@ -367,7 +368,12 @@ void update()
 
     ImGui::End();
 
-    //Camera Settings
+    //BackGroundd Settings
+    ImGui::Begin("BackGround");
+
+    ImGui::ColorEdit4("BackGround", (float*)&ClearColor);
+
+    ImGui::End();
     
 
 
@@ -403,7 +409,7 @@ void update()
 
     // Update variables that change once per frame
     CBChangesEveryFrame cb;
-    cb.mWorld = g_World;
+    cb.mWorld = XMMatrixTranspose(g_World);
     cb.vMeshColor = g_vMeshColor;
     g_modelBuffer.update(g_deviceContext, 0, nullptr, &cb, 0, 0);
 
@@ -426,7 +432,7 @@ void update()
 void Render()
 {
     // Clear the back buffer
-    float ClearColor[4] = { 0.0f, 0.125f, 0.3f, 1.0f }; // red, green, blue, alpha
+    //float ClearColor[4] = { 0.0f, 0.125f, 0.3f, 1.0f }; // red, green, blue, alpha
     g_depthStencilView.render(g_deviceContext);
     g_renderTargetView.render(g_deviceContext, g_depthStencilView, 1, ClearColor);
     // Set viewport
