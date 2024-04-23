@@ -65,6 +65,7 @@ float                               translationX = 0.0f;
 float                               translationY = 0.0f;
 float                               translationZ = 0.0f;
 float                               ClearColor[4] = { 0.0f, 0.125f, 0.3f, 1.0f }; // red, green, blue, alpha
+bool                                rotateObject;
 
 
 
@@ -366,6 +367,13 @@ void update()
     ImGui::SliderFloat("Translate Y", &translationY, -10.0f, 10.0f);
     ImGui::SliderFloat("Translate Z", &translationZ, -10.0f, 10.0f);
 
+    ImGui::Checkbox("Rotate Object", &rotateObject);
+    if (rotateObject) {
+        const float rotationSpeed = XM_PI / 1100.1f;
+        // rotationAngleX += rotationSpeed * t;
+        rotationAngleY += rotationSpeed;
+        //rotationAngleZ += rotationSpeed * t;
+    }
     ImGui::End();
 
     //BackGroundd Settings
@@ -374,6 +382,8 @@ void update()
     ImGui::ColorEdit4("BackGround", (float*)&ClearColor);
 
     ImGui::End();
+
+    
     
 
 
