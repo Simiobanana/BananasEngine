@@ -1,61 +1,40 @@
+# BananasEngine
 
-# Motor Gráfico DirectX
-¡Bienvenido al repositorio del Motor Gráfico DirectX!
+A compact DirectX 11 graphics-engine study built in C++ over four months as an academic project. It focuses on the rendering pipeline and exposes real-time controls through ImGui.
 
-Este motor gráfico ha sido creado como parte de un proyecto en clase, con el objetivo de proporcionar una plataforma sólida para el desarrollo de aplicaciones y juegos en entornos DirectX. Aquí encontrarás información sobre las diversas clases y componentes que conforman este motor.
+![BananasEngine screenshot](https://github.com/Simiobanana/BananasEngine/assets/114266340/f664c659-8ae3-4a96-b62c-57f8f39c37ab)
 
-## Componentes Principales
-Buffer
-La clase Buffer proporciona funcionalidades para la gestión de búferes de datos en la GPU.
+## What it demonstrates
 
-DepthStencilView
-DepthStencilView facilita la gestión de vistas de profundidad y stencil para la renderización 3D.
+- OBJ model loading and textured mesh rendering.
+- Albedo and normal-map handling.
+- Translation, rotation and scale controls at runtime.
+- Light position, color and intensity controls.
+- Background and mesh-color controls.
+- DirectX resource wrappers for devices, buffers, shaders, textures, swap chains, viewports and render targets.
 
-Device
-Device representa el dispositivo gráfico principal y proporciona una interfaz para la creación y gestión de recursos.
+## Technical structure
 
-DeviceContext
-DeviceContext es responsable de enviar comandos al dispositivo gráfico para realizar operaciones de renderizado.
+The project separates rendering responsibilities into focused C++ classes under `include/` and `src/`. `BananasEngine.cpp` coordinates the application loop and GPU resources, while `UserInterface.cpp` provides the ImGui controls.
 
-InputLayout
-InputLayout define el diseño de los datos de entrada para los shaders.
+| Area | Main components |
+|---|---|
+| Window and presentation | `Window`, `SwapChain`, `Viewport` |
+| GPU resources | `Buffer`, `Texture`, `SamplerState` |
+| Rendering | `Device`, `DeviceContext`, `RenderTargetView`, `DepthStencilView` |
+| Assets and shaders | `ModelLoader`, `OBJ_Loader`, `InputLayout`, `ShaderProgram` |
 
-ModelLoader
-ModelLoader se encarga de cargar modelos en el motor gráfico desde archivos específicos.
+## Run locally
 
-OBJ_Loader
-OBJ_Loader proporciona funcionalidades para cargar modelos en formato OBJ.
+1. Open `BananasEngine/BananasEngine_2010.sln` in Visual Studio on Windows.
+2. Ensure the Windows SDK and DirectX development dependencies are installed.
+3. Build and run the solution using the matching platform configuration.
 
-RenderTargetView
-RenderTargetView gestiona vistas de destino de renderizado para la renderización de texturas y otros objetos.
+Model and texture imports are configured in code. This repository contains third-party libraries and starter components; their original licenses and credits remain with their authors.
 
-SampleState
-SampleState controla cómo se realizan las operaciones de muestreo durante el proceso de renderizado.
+## Context
 
-ShaderProgram
-ShaderProgram encapsula los shaders utilizados en el proceso de renderizado.
+This is a learning project that documents my understanding of a real-time graphics pipeline. It is not presented as a production-ready general-purpose engine.
 
-SwapChain
-SwapChain facilita la presentación de imágenes renderizadas en la ventana de visualización.
-
-Texture
-Texture representa una textura en el motor gráfico y proporciona funcionalidades para su creación y manipulación.
-
-Viewport
-Viewport define la región en la que se realiza el renderizado en el destino de renderizado.
-
-Window
-Window gestiona la ventana de la aplicación y proporciona una interfaz para interactuar con ella.
-
-## Entorno de Desarrollo
-Este motor gráfico se ha desarrollado utilizando la librería DirectX con la ayuda del entorno de desarrollo integrado Visual Studio 2019. DirectX proporciona un conjunto de herramientas poderosas para el desarrollo de gráficos en tiempo real en plataformas Windows.
-
-## Funcionalidades Actuales
-El motor gráfico es capaz de cargar modelos en el entorno, renderizarlos en la pantalla ademas de poder añadirle sus respectivas texturas albedo junto con las normales.
-
-## Aqui unas imagenes de un par de modelos texturas y la UI
-![image](https://github.com/Simiobanana/BananasEngine/assets/114266340/f664c659-8ae3-4a96-b62c-57f8f39c37ab)
-
-
-¡Gracias por visitar nuestro repositorio! Esperamos que encuentres útil este motor gráfico en tus proyectos de desarrollo de juegos y aplicaciones. Si tienes alguna pregunta o sugerencia, no dudes en abrir un issue o ponerte en contacto con nosotros.
+[Portfolio](https://alejandro-urvieta-portfolio.alejandroug2608.chatgpt.site) · [GitHub profile](https://github.com/Simiobanana)
 
